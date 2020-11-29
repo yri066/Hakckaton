@@ -6,17 +6,19 @@ document.onclick = function (e) {
 	e = e || event;
 	if ($.session.get('sound') != 'false' && bool && $.session.get('sound') != undefined) {
 		comm();
+		bool = false;
 	}
-	bool = false;
+	
 };
 
+//Произнести выполняемые команды
 function comm() {
 	artyom.say("Я поддерживаю следующие команды:");
 	artyom.say("открыть страницу.");
 	if ($.session.get('login') != undefined) {
 		if ($.session.get('admin') != undefined)
 			artyom.say("панель администратора");
-		artyom.say("выйти");
+		artyom.say("текущий баланс. выйти");
 	}
 	else {
 		artyom.say("регистрация. войти");
@@ -24,7 +26,7 @@ function comm() {
 }
 
 
-// first we make sure annyang started succesfully
+// Провера того, что библиотека успешно запустилась
 if (annyang) {
 
 
@@ -129,10 +131,7 @@ if (annyang) {
 
 	}
 
-	// define our commands.
-	// * The key is the phrase you want your users to say.
-	// * The value is the action to do.
-	//   You can pass a function, a function name (as a string), or write your function as part of the commands object.
+	// Список команд : вызываемая функция
 	var commands = {
 		'перейди на :page (страницу)': openPage,
 		'перейди на (страницу) (о) :page': openPage,
@@ -162,22 +161,17 @@ if (annyang) {
 
 	};
 
-	com = Object.keys(commands);
 
-	//console.log(com[0]);
+	// Вывод отладочной унформиции
+	//annyang.debug();
 
-	// OPTIONAL: activate debug mode for detailed logging in the console
-	annyang.debug();
-
-	// Add voice commands to respond to
+	// Добавление команд для распознавания
 	annyang.addCommands(commands);
 
-	// OPTIONAL: Set a language for speech recognition (defaults to English)
-	// For a full list of language codes, see the documentation:
-	// https://github.com/TalAter/annyang/blob/master/docs/FAQ.md#what-languages-are-supported
+	// Язык паспознавания
 	annyang.setLanguage('ru');
 
-	// Start listening. You can call this here, or attach this call to an event, button, etc.
+	// Запуск прослушивания речи
 	annyang.start();
 } else {
 	//console.log("Speech Recognition is not supported");
@@ -188,7 +182,7 @@ if (!annyang) {
 }
 
 
-$(function () {// if you use artyom.fatality , wait 250 ms to initialize again.
+$(function () {// initialize
 	artyom.initialize({
 		lang: "ru-RU",// A lot of languages are supported. Read the docs !
 		continuous: true,// Artyom will listen forever
