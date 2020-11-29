@@ -4,7 +4,7 @@ var com;
 var bool = true;
 document.onclick = function (e) {
 	e = e || event;
-	if ($.session.get('sound') != 'false' && bool && $.session.get('sound') != undefined) {
+	if ($.session.get('sound') != 'false' && bool) {
 		comm();
 		bool = false;
 	}
